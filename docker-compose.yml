@@ -1,0 +1,25 @@
+
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DB=flaskcrud
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: flaskcrud
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql/db.sql:/docker-entrypoint-initdb.d/db.sql
